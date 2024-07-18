@@ -25,13 +25,13 @@
 			<input type="hidden" th:name="${mvc.csrf.name}" th:value="${mvc.csrf.token}"/>
 			<button type="submit">Clear</button>
 		</form>
-		<div id="error-list" th:if="${errors.size() > 0}" th:each="err : ${errors}">
-			<p th:text="${err}"></p>
+		<div id="error-list" th:if="${errors.size() > 0}">
+			<p th:each="err : ${errors}" th:text="${err}"></p>
 		</div>
 		<hr>
 		<h1>Message List</h1>
-		<div id="message-list" th:each="mes : ${messages}">
-			<p th:text="|${mes.name}: ${mes.message}|"></p>
+		<div id="message-list">
+			<p th:each="mes : ${messages}" th:text="|${mes.name}: ${mes.message}|"></p>
 		</div>
 	</div>
 </body>
