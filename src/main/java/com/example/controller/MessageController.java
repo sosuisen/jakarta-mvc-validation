@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.example.model.Message;
 import com.example.model.MessageDAO;
 
 import jakarta.annotation.security.PermitAll;
@@ -14,30 +15,27 @@ import jakarta.mvc.Controller;
 import jakarta.mvc.Models;
 import jakarta.mvc.RedirectScoped;
 import jakarta.mvc.binding.BindingResult;
-import jakarta.mvc.binding.MvcBinding;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
-
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 @RedirectScoped
+@Getter
 class ResultMessage implements Serializable {
-	private ArrayList<String> errors = new ArrayList<>();
-
-	public ArrayList<String> getErrors() {
-		return errors;
-	}
+	private final ArrayList<String> errors = new ArrayList<>();
+	private final ArrayList<String> successes = new ArrayList<>();
 }
 
 @Controller
 @RequestScoped
+@Slf4j
 @PermitAll
 @Path("/")
 public class MessageController {
@@ -72,7 +70,7 @@ public class MessageController {
 			req.logout();
 			req.getSession().invalidate();
 		} catch (ServletException e) {
-			e.printStackTrace();
+			log.warn("Cannot logout: " + e.getMessage());
 		}
 		return "redirect:/";
 	}
@@ -91,20 +89,14 @@ public class MessageController {
 	@POST
 	@RolesAllowed("USER")
 	@Path("messages")
-	public String postMessages(
-			@Valid
-			@MvcBinding
-			@NotBlank(message = "{message.NotBlank}")
-			@Size(max = 140, message = "{message.Size}")
-			@FormParam("message")
-			String mes
-		) throws SQLException {
-
+	public String postMessages(@Valid @BeanParam Message mes) throws SQLException {
 		if (bindingResult.isFailed()) {
 			resultMessage.getErrors().addAll(bindingResult.getAllMessages());
 			return "redirect:messages";
 		}
-		messagesDAO.create(req.getRemoteUser(), mes);
+		mes.setName(req.getRemoteUser());
+		messagesDAO.create(mes);
+		resultMessage.getSuccesses().add("Message posted successfully.");
 		return "redirect:messages";
 	}
 

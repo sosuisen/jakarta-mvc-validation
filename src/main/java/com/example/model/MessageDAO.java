@@ -26,20 +26,22 @@ public class MessageDAO {
 				messagesModel.add(new Message(
 						rs.getInt("id"),
 						rs.getString("name"),
+						rs.getString("title"),
 						rs.getString("message")));
 			}
 		}
 		return messagesModel;
 	}
 
-	public void create(String name, String message) throws SQLException {
+	public void create(Message mes) throws SQLException {
 		try (
 				Connection conn = ds.getConnection();
 				PreparedStatement pstmt = conn
-						.prepareStatement("INSERT INTO messages(name, message) VALUES(?, ?)");
+						.prepareStatement("INSERT INTO messages(name, title, message) VALUES(?, ?, ?)");
 			) {
-			pstmt.setString(1, name);
-			pstmt.setString(2, message);
+			pstmt.setString(1, mes.getName());
+			pstmt.setString(2, mes.getTitle());
+			pstmt.setString(3, mes.getMessage());
 			pstmt.executeUpdate();
 		}
 	}

@@ -12,8 +12,11 @@ import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 @ApplicationScoped
+@Slf4j
 public class DatabaseSetup {
 
 	@Resource
@@ -51,7 +54,8 @@ public class DatabaseSetup {
 				CREATE TABLE IF NOT EXISTS messages (
 					id INT AUTO_INCREMENT PRIMARY KEY,
 					name VARCHAR(64) NOT NULL,
-					message VARCHAR(140) NOT NULL)
+					title VARCHAR(70) NOT NULL,
+					message VARCHAR(400) NOT NULL)
 				""");
 
 		// Initial password is "foo", which must be changed after first login
@@ -66,7 +70,7 @@ public class DatabaseSetup {
 		update(ds, "INSERT INTO user_roles VALUES('myuser', 'USER')");
 
 		try {
-			System.out.println("### current datasource: " + ds.getConnection().getMetaData().getURL());
+			log.info("Current datasource: " + ds.getConnection().getMetaData().getURL());
 		} catch (SQLException e) {
 			throw new IllegalStateException(e);
 		}
@@ -78,7 +82,7 @@ public class DatabaseSetup {
 			update(ds, "DROP TABLE IF EXISTS user_roles");
 			update(ds, "DROP TABLE IF EXISTS messages");
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn("Exception on drop tables: " + e.getMessage());
 		}
 	}
 
@@ -88,7 +92,6 @@ public class DatabaseSetup {
 				PreparedStatement pstmt = con.prepareStatement(query);) {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new IllegalStateException(e);
 		}
 	}
