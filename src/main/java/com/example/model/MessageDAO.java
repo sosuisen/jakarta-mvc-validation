@@ -27,7 +27,7 @@ public class MessageDAO {
 						rs.getInt("id"),
 						rs.getString("name"),
 						rs.getString("title"),
-						rs.getString("message")));
+						rs.getString("body")));
 			}
 		}
 		return messagesModel;
@@ -37,11 +37,11 @@ public class MessageDAO {
 		try (
 				Connection conn = ds.getConnection();
 				PreparedStatement pstmt = conn
-						.prepareStatement("INSERT INTO messages(name, title, message) VALUES(?, ?, ?)");
+						.prepareStatement("xINSERT INTO messages(name, title, body) VALUES(?, ?, ?)");
 			) {
 			pstmt.setString(1, mes.getName());
 			pstmt.setString(2, mes.getTitle());
-			pstmt.setString(3, mes.getMessage());
+			pstmt.setString(3, mes.getBody());
 			pstmt.executeUpdate();
 		}
 	}

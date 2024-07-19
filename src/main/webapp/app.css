@@ -66,9 +66,32 @@ button {
     margin: 20px 0;
 }
 
-#message-list p {
-	font-size: 1.2em;
-	margin-top: 7px;
+
+.message-item {
+    background-color: #fafafa;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.message-name {
+    color: #333;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.message-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.message-body {
+    font-size: 1.2em;
 }
 
 .form-vertical {
@@ -89,19 +112,19 @@ label {
     margin-bottom: 5px;
 }
 
-
-label {
-    font-size: 1.2em;
-    align-self: center;
-}
-
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+textarea {
     padding: 10px;
     font-size: 1em;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 90%;
+    margin-bottom: 10px;
+}
+
+textarea {
+    height: 150px;
 }
 
 button {

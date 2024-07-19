@@ -55,7 +55,7 @@ public class DatabaseSetup {
 					id INT AUTO_INCREMENT PRIMARY KEY,
 					name VARCHAR(64) NOT NULL,
 					title VARCHAR(70) NOT NULL,
-					message VARCHAR(400) NOT NULL)
+					body VARCHAR(400) NOT NULL)
 				""");
 
 		// Initial password is "foo", which must be changed after first login

@@ -24,8 +24,8 @@ public class Message{
         private String title;
         
         @MvcBinding
-        @NotBlank(message = "{message.NotBlank}")
-        @Size(max = 400, message = "{message.Size}")
-        @FormParam("message")
-        private String message;
+        @NotBlank(message = "{body.NotBlank}")
+        @Size(max = 400, message = "{body.Size}")
+        @FormParam("body")
+        private String body;
 }
