@@ -8,14 +8,15 @@ This app will have the following features:
 
 Newly added features:
 - Validation
+- Error handling
 - Logger
 
 Previous features:
 - Routing
 - Login/Logout
 - Database
-- Post message
+- Post messages
 - Redirect
+- Handling static files
 - Authorization
 - CSRF protection
-
