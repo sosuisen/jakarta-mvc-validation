@@ -5,18 +5,18 @@ In this part, we will create a message board with validation using Jakarta MVC.
 
 This app will have the following features:
 
-
 Newly added features:
 - Validation
-- Error handling
 - Logger
 
 Previous features:
 - Routing
+- GET/POST
+- Handling static files
+- Redirect
+- Authentication
 - Login/Logout
 - Database
-- Post messages
-- Redirect
-- Handling static files
 - Authorization
+- Error handling 
 - CSRF protection
