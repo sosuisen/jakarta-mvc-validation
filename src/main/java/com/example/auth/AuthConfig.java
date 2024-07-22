@@ -12,15 +12,15 @@ import jakarta.security.enterprise.identitystore.DatabaseIdentityStoreDefinition
 @DeclareRoles({"ADMIN", "USER"})
 @FormAuthenticationMechanismDefinition(
     loginToContinue = @LoginToContinue(
-        loginPage="/app/login",
-        errorPage="/app/login?error=invalid_user",
+        loginPage="/login",
+        errorPage="/login?error=invalid_user",
         useForwardToLogin = true
     )
 )
 @DatabaseIdentityStoreDefinition(
 		dataSourceLookup = "jdbc/__default",
-		callerQuery = "select password from users where name = ?",
-		groupsQuery = "select role from user_roles where name = ?",
+		callerQuery = "select password from caller where name = ?",
+		groupsQuery = "select group_name from caller_groups where caller_name = ?",
 		hashAlgorithmParameters = {
 				"Pbkdf2PasswordHash.Iterations=210000",
 				"Pbkdf2PasswordHash.Algorithm=PBKDF2WithHmacSHA512",

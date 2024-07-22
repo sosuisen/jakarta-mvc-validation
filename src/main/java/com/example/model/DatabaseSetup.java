@@ -12,7 +12,6 @@ import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @ApplicationScoped
@@ -33,21 +32,21 @@ public class DatabaseSetup {
 
 		passwordHash.initialize(authConfig.getHashAlgorithmParams());
 
-		update(ds, "DROP TABLE IF EXISTS users");
-		update(ds, "DROP TABLE IF EXISTS user_roles");
+		update(ds, "DROP TABLE IF EXISTS caller");
+		update(ds, "DROP TABLE IF EXISTS caller_groups");
 		update(ds, "DROP TABLE IF EXISTS messages");
 
 		update(ds, """
-				CREATE TABLE IF NOT EXISTS users(
+				CREATE TABLE IF NOT EXISTS caller(
 					name VARCHAR(64) PRIMARY KEY,
 					password VARCHAR(255) NOT NULL)
 				 """);
 
 		update(ds, """
-				CREATE TABLE IF NOT EXISTS user_roles (
-					name VARCHAR(64) NOT NULL,
-					role VARCHAR(64) NOT NULL,
-					PRIMARY KEY (name, role))					
+				CREATE TABLE IF NOT EXISTS caller_groups (
+					caller_name VARCHAR(64) NOT NULL,
+					group_name VARCHAR(64) NOT NULL,
+					PRIMARY KEY (caller_name, group_name))
 				""");
 
 		update(ds, """
@@ -60,14 +59,14 @@ public class DatabaseSetup {
 
 		// Initial password is "foo", which must be changed after first login
 		update(ds,
-				"INSERT INTO users VALUES('myuser', '" + passwordHash.generate("foo".toCharArray()) + "')");
+				"INSERT INTO caller VALUES('myuser', '" + passwordHash.generate("foo".toCharArray()) + "')");
 		update(ds,
-				"INSERT INTO users VALUES('myadmin', '" + passwordHash.generate("foo".toCharArray()) + "')");
+				"INSERT INTO caller VALUES('myadmin', '" + passwordHash.generate("foo".toCharArray()) + "')");
 
-		update(ds, "INSERT INTO user_roles VALUES('myadmin', 'ADMIN')");
-		update(ds, "INSERT INTO user_roles VALUES('myadmin', 'USER')");
+		update(ds, "INSERT INTO caller_groups VALUES('myadmin', 'ADMIN')");
+		update(ds, "INSERT INTO caller_groups VALUES('myadmin', 'USER')");
 
-		update(ds, "INSERT INTO user_roles VALUES('myuser', 'USER')");
+		update(ds, "INSERT INTO caller_groups VALUES('myuser', 'USER')");
 
 		try {
 			log.info("Current datasource: " + ds.getConnection().getMetaData().getURL());
@@ -78,8 +77,8 @@ public class DatabaseSetup {
 
 	public void onApplicationScopedDestroyed(@Observes @BeforeDestroyed(ApplicationScoped.class) Object event) {		
 		try {
-			update(ds, "DROP TABLE IF EXISTS users");
-			update(ds, "DROP TABLE IF EXISTS user_roles");
+			update(ds, "DROP TABLE IF EXISTS caller");
+			update(ds, "DROP TABLE IF EXISTS caller_groups");
 			update(ds, "DROP TABLE IF EXISTS messages");
 		} catch (Exception e) {
 			log.warn("Exception on drop tables: " + e.getMessage());
