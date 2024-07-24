@@ -37,7 +37,7 @@ public class MessageDAO {
 		try (
 				Connection conn = ds.getConnection();
 				PreparedStatement pstmt = conn
-						.prepareStatement("xINSERT INTO messages(name, title, body) VALUES(?, ?, ?)");
+						.prepareStatement("INSERT INTO messages(name, title, body) VALUES(?, ?, ?)");
 			) {
 			pstmt.setString(1, mes.getName());
 			pstmt.setString(2, mes.getTitle());
