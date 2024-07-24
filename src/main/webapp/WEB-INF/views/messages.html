@@ -2,28 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<link th:href="@{/app.css}" rel="stylesheet">
+	<link href="/app.css" rel="stylesheet">
 	<title>Message Board: Main</title>
 </head>
 <body>
 	<nav>
-		[<a th:href="@{/app}">Home</a>]
-		[<a th:href="@{/app/users}">User Management</a>]
-		[<a th:href="@{/app/logout}">Logout</a>]
+		[<a th:href="@{/mvc/}">Home</a>]
+		[<a th:href="@{/mvc/users}">User Management</a>]
+		[<a th:href="@{/mvc/logout}">Logout</a>]
 	</nav>
 	<div id="main">
-		<p th:text="${'Hello, ' + userName + (isAdmin ? '<ADMIN>' : '') + '!'}"></p>
-		<form th:action="@{/app/messages}" method="POST" class="form-vertical">
+		<p th:text="|Hello, ${userName + (isAdmin ? '<ADMIN>' : '')}!|"></p>
+		<form th:action="@{/mvc/messages}" method="POST" class="form-vertical">
 			<div class="form-group">
-				<label for="title">Title:</label>				
-				<input type="text" id="title" name="title" th:value="${input.title}"/>
+				<label for="title">Title:</label>
+				<input type="text" id="title" name="title" th:value="${input.title}" />
 				<label for="body">Body:</label>
 				<textarea id="body" name="body" th:text="${input.body}"></textarea>
 				<input type="hidden" th:name="${mvc.csrf.name}" th:value="${mvc.csrf.token}" />
 			</div>
 			<button type="submit">Send</button>
 		</form>
-		<form th:action="@{/app/clear}" method="POST" class="form-vertical">
+		<form th:action="@{/mvc/messages}" method="POST" class="form-vertical">
+			<input type="hidden" name="_method" value="DELETE">
 			<input type="hidden" th:name="${mvc.csrf.name}" th:value="${mvc.csrf.token}" />
 			<button type="submit">Clear</button>
 		</form>
@@ -37,11 +38,10 @@
 		<h1>Message List</h1>
 		<div id="message-list">
 			<div th:each="mes : ${messages}" class="message-item">
-                <p class="message-title" th:text="${mes.title}"></p>
+				<p class="message-title" th:text="${mes.title}"></p>
 				<p class="message-name" th:text="${mes.name}"></p>
-                <p class="message-body" th:text="${mes.body}"></p>
-            </div>
-        </div>
+				<p class="message-body" th:text="${mes.body}"></p>
+			</div>
 		</div>
 	</div>
 </body>

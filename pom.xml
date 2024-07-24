@@ -54,11 +54,6 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.krazo</groupId>
-            <artifactId>krazo-core</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.krazo</groupId>
             <artifactId>krazo-jersey</artifactId>
             <version>3.0.1</version>
         </dependency>
@@ -67,7 +62,6 @@
             <artifactId>krazo-thymeleaf</artifactId>
             <version>3.0.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

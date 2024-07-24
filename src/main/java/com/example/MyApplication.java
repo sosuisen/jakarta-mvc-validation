@@ -7,7 +7,7 @@ import jakarta.mvc.security.Csrf;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
-@ApplicationPath("/app")
+@ApplicationPath("/mvc")
 public class MyApplication extends Application {
     @Override
 	public Map<String, Object> getProperties() {

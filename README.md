@@ -7,7 +7,7 @@ This app will have the following features:
 
 Newly added features:
 - Validation
-- Logger
+- Logging
 
 Previous features:
 - Routing

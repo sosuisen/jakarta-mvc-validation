@@ -12,8 +12,8 @@ import jakarta.security.enterprise.identitystore.DatabaseIdentityStoreDefinition
 @DeclareRoles({"ADMIN", "USER"})
 @FormAuthenticationMechanismDefinition(
     loginToContinue = @LoginToContinue(
-        loginPage="/login",
-        errorPage="/login?error=invalid_user",
+        loginPage="/mvc/login",
+        errorPage="/mvc/login?error=invalid_user",
         useForwardToLogin = true
     )
 )

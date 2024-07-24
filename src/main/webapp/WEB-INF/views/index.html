@@ -2,10 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/app.css}" rel="stylesheet">
+    <link href="/app.css" rel="stylesheet">
     <title>Home</title>
 </head>
 <body>
+    <nav>
+        [<a th:href="@{/mvc/}">Home</a>]
+    </nav>
     <div id="main">
         <p th:text="|Welcome to ${appName}!|"></p>
         <p>
@@ -13,7 +16,7 @@
             If you like Jakarta MVC style, use
             <a th:href="|${mvc.basePath}/messages|">Enter</a>
             -->
-            <a th:href="@{/app/messages}">Enter</a>
+            <a th:href="@{/mvc/messages}">Enter</a>
         </p>
     </div>
 </body>

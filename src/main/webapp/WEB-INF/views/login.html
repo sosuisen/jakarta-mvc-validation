@@ -2,15 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/app.css}" rel="stylesheet">
+    <link href="/app.css" rel="stylesheet">
     <title>Message Board: Login</title>
 </head>
 <body>
     <nav>
-        [<a th:href="@{/app}">Home</a>]
+        [<a th:href="@{/mvc/}">Home</a>]
     </nav>
     <div id="main">
-        <form th:action="@{/app/j_security_check}" method="POST" class="form-vertical">
+        <form th:action="@{/mvc/j_security_check}" method="POST" class="form-vertical">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="j_username" required>

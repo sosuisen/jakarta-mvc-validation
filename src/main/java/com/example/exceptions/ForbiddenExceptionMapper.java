@@ -26,17 +26,10 @@ public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenExcept
 		} catch (ServletException e) {
 			log.warn("Cannot logout on ForbiddenException: " + e.getMessage());
 		}
-
 		// Show the login screen.
-		if (req.getMethod().equals("GET")) {
-			// Use Response.seeOther() to redirect GET request.
-			// GET request to the forbidden URL is always interrupted by the login screen,
-			// because the user is not logged in.
-			return Response.seeOther(URI.create(req.getRequestURL().toString() + "?error=forbidden")).build();
-		} else {
-			// POST request to the forbidden URL is not interrupted by the login screen.
-			// So, redirect to the main screen instead.
-			return Response.seeOther(URI.create(req.getContextPath() + "/app/messages?error=forbidden")).build();
-		}
+		// Use seeOther() to redirect a request.
+		// Any GET request to the forbidden URL will always be forwarded to the login screen
+		// because the user is not logged in.
+		return Response.seeOther(URI.create(req.getRequestURL().toString() + "?error=forbidden")).build();
 	}
 }
