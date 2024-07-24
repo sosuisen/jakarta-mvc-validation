@@ -23,5 +23,7 @@ Previous features:
 - Error handling 
 - CSRF protection
 
+---
 Hidekazu Kubota
+
 MIT License
